@@ -6,14 +6,17 @@ async function run() {
 const dt = new Date();
 const ano = dt.getUTCFullYear();
 const mes = dt.getUTCMonth() > 8 ? (dt.getUTCMonth() + 1) : '0' + (dt.getUTCMonth() + 1).toString(); 
-const folder = dt.toISOString().split('T')[0];
+const folder = 'capturas/' + dt.toISOString().split('T')[0];
 const basePath = 'http://www.transparenciafiscal.am.gov.br/transpprd/mnt/info/';
 
 if(!fs.existsSync(folder)){
     fs.mkdirSync(folder);
 }
 
-const browser = await puppeteer.launch();
+const browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium-browser',
+    args: ['--no-sandbox', '--disable-dev-shm-usage'],
+  });
 const page = await browser.newPage();
 await page.setViewport({width: 1280, height: 800});
 

@@ -1,10 +1,3 @@
-# p-relacao-pagamentos
-
-puppeteer project
-
-
-### Dockerfile ####
-
 FROM node:10.16.0-alpine
 WORKDIR /app
 COPY . .
@@ -13,6 +6,11 @@ ENV CHROME_BIN="/usr/bin/chromium-browser"\
 RUN set -x \
   && apk update \
   && apk upgrade \
+  && apk add tzdata \
+  && cp /usr/share/zoneinfo/America/Manaus /etc/localtime \
+  && echo "America/Manaus" > /etc/timezone \
+  && apk del tzdata \
+  \
   # replacing default repositories with edge ones
   && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" > /etc/apk/repositories \
   && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
@@ -30,15 +28,3 @@ RUN set -x \
   && echo
 ENTRYPOINT ["/usr/bin/dumb-init"]
 CMD crond -l 2 -f
-
-##### Comandos Uteis #####
-docker exec -it ID /bin/sh
-crontab -e
-0 5 * * * cd cd /app && node index.js
-[ESC]
-:wq
-
-docker build -f Dockerfile -t mycron .
-docker run -d mycron
-docker exec -it ID /bin/sh
-docker cp nome-do-container:/opt/jboss C:\postgresql-9.1-901-1.jdbc4.jar
