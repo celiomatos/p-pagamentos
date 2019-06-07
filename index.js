@@ -6,7 +6,7 @@ async function run() {
 const dt = new Date();
 const ano = dt.getUTCFullYear();
 const mes = dt.getUTCMonth() > 8 ? (dt.getUTCMonth() + 1) : '0' + (dt.getUTCMonth() + 1).toString(); 
-const folder = 'capturas/' + dt.toISOString().split('T')[0];
+const folder = 'capturas/ppagamento/' + dt.toISOString().split('T')[0];
 const basePath = 'http://www.transparenciafiscal.am.gov.br/transpprd/mnt/info/';
 
 if(!fs.existsSync(folder)){
