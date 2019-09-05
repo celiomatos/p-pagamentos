@@ -25,6 +25,6 @@ RUN set -x \
   && apk del --no-cache make gcc g++ python binutils-gold gnupg libstdc++ \
   && rm -rf /usr/include \
   && rm -rf /var/cache/apk/* /root/.node-gyp /usr/share/man /tmp/* \
-  && echo
+  && echo "5       16      *       *       *       cd /app && node index.js" >> /var/spool/cron/crontabs/root
 ENTRYPOINT ["/usr/bin/dumb-init"]
 CMD crond -l 2 -f
